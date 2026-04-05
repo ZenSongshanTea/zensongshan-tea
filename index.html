@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zen Songshan Tea · 禅松山茶</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            margin: 0;
+            background: #faf9f6;
+            color: #2c3e2f;
+        }
+        header {
+            background: #2c5e2e;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+        }
+        .sub {
+            font-style: italic;
+            margin-top: 0.5rem;
+            opacity: 0.9;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        .intro {
+            background: white;
+            padding: 2rem;
+            border-radius: 24px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        .product-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: 0.2s;
+        }
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        .product-img {
+            width: 100%;
+            height: 180px;
+            background: #e9e6dd;
+            object-fit: cover;
+        }
+        .product-info {
+            padding: 1.2rem;
+        }
+        .product-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 0 0 0.5rem;
+        }
+        .product-desc {
+            color: #4a5b4a;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        .price {
+            font-weight: bold;
+            color: #2c5e2e;
+            font-size: 1.1rem;
+        }
+        .wechat {
+            text-align: center;
+            margin: 3rem 0;
+            padding: 2rem;
+            background: #edeae2;
+            border-radius: 32px;
+        }
+        .qr {
+            max-width: 160px;
+            margin: 1rem auto;
+            display: block;
+        }
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: #2c3e2f;
+            color: #ccc;
+            font-size: 0.8rem;
+        }
+        a {
+            color: #2c5e2e;
+        }
+        .btn {
+            display: inline-block;
+            background: #2c5e2e;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 40px;
+            text-decoration: none;
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>禅松山茶 · Zen Songshan Tea</h1>
+    <div class="sub">嵩山脚下 · 自然之味</div>
+</header>
+
+<div class="container">
+    <div class="intro">
+        <p>始于1991年，少林寺旁的老茶庄。我们把山里的茶，安静地摆在这里。你来，就像走进自然里，慢慢挑，慢慢选，带走你喜欢的那一味。</p>
+        <p>👉 长按保存下方微信二维码，添加好友即可咨询、下单。支持全球发货。</p>
+    </div>
+
+    <h2>🍃 精选茶叶</h2>
+    <div class="product-grid" id="product-list">
+        <div class="product-card">
+            <div class="product-info">
+                <div class="product-title">龙井 · 明前特级</div>
+                <div class="product-desc">西湖狮峰头采单芽，栗香浓郁，鲜醇绵柔</div>
+                <div class="price">$48 / 50g</div>
+            </div>
+        </div>
+        <div class="product-card">
+            <div class="product-info">
+                <div class="product-title">金骏眉 · 桐木关</div>
+                <div class="product-desc">头春单芽，花果蜜香，细腻甜润</div>
+                <div class="price">$68 / 50g</div>
+            </div>
+        </div>
+    </div>
+    <p style="text-align:center; margin-top:2rem"><a href="/admin" class="btn">📦 后台管理（店主入口）</a></p>
+
+    <div class="wechat">
+        <strong>📱 加微信，直接选茶</strong>
+        <img src="https://placehold.co/200x200?text=WeChat+QR" alt="微信二维码" class="qr">
+        <p>微信号：<strong>zensongshan_tea</strong> （或扫上方二维码）</p>
+        <p>批发、零售均可，全球邮寄</p>
+    </div>
+</div>
+
+<footer>
+    © 1991-2026 登封禅松山茶庄 · 自然 · 信任 · 一杯好茶
+</footer>
+</body>
+</html>
