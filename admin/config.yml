@@ -1,0 +1,21 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "products"
+    label: "茶叶产品"
+    folder: "_data/products"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "产品名称", name: "title", widget: "string"}
+      - {label: "英文名称", name: "en_title", widget: "string", required: false}
+      - {label: "分类", name: "category", widget: "select", options: ["绿茶", "红茶", "白茶", "乌龙茶", "黑茶", "花草茶"]}
+      - {label: "等级", name: "grade", widget: "string"}
+      - {label: "描述", name: "description", widget: "text"}
+      - {label: "价格 (美元)", name: "price", widget: "string"}
+      - {label: "图片", name: "image", widget: "image", required: false}
