@@ -1,3 +1,7 @@
+login:
+  enabled: true
+  allowed_emails:
+        - 1014635782@qq.com
 backend:
   name: git-gateway
   branch: main
