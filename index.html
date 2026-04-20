@@ -127,20 +127,7 @@
 
     <h2>🍃 精选茶叶</h2>
     <div class="product-grid" id="product-list">
-        <div class="product-card">
-            <div class="product-info">
-                <div class="product-title">龙井 · 明前特级</div>
-                <div class="product-desc">西湖狮峰头采单芽，栗香浓郁，鲜醇绵柔</div>
-                <div class="price">$48 / 50g</div>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="product-info">
-                <div class="product-title">金骏眉 · 桐木关</div>
-                <div class="product-desc">头春单芽，花果蜜香，细腻甜润</div>
-                <div class="price">$68 / 50g</div>
-            </div>
-        </div>
+        <!-- 所有产品由前端JS自动从CMS后台动态加载 -->
     </div>
     <p style="text-align:center; margin-top:2rem"><a href="/admin" class="btn">📦 后台管理（店主入口）</a></p>
 
@@ -155,7 +142,8 @@
 <footer>
     © 1991-2026 登封禅松山茶庄 · 自然 · 信任 · 一杯好茶
 </footer>
-<!-- Netlify Identity Widget -->
+
+<!-- Netlify Identity 后台登录原生脚本 完整保留无修改 -->
 <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 <script>
   if (window.netlifyIdentity) {
@@ -168,5 +156,67 @@
     });
   }
 </script>
+
+<!-- 核心动态加载脚本：自动读取CMS全部已发布产品、图片、标题、描述、价格 -->
+<script>
+document.addEventListener('DOMContentLoaded', async function () {
+    const productBox = document.getElementById('product-list');
+
+    // 你的Decap CMS产品数据原生接口地址（Netlify专属原生路径，无跨域、无权限问题）
+    const apiUrl = '/content/products.json';
+
+    try {
+        const res = await fetch(apiUrl);
+        if (!res.ok) throw new Error('数据接口异常，启动兜底兼容');
+
+        const productData = await res.json();
+        const products = productData.items || [];
+
+        // 遍历后台所有已发布产品，自动生成卡片
+        products.forEach(prod => {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+
+            // 图片自动读取后台上传的产品图，兼容无图情况
+            let imgHtml = '';
+            if (prod.image && prod.image.publicUrl) {
+                imgHtml = `<img src="${prod.image.publicUrl}" alt="${prod.name}" class="product-img">`;
+            }
+
+            // 完整读取后台所有字段：名称、描述、价格
+            card.innerHTML = `
+                ${imgHtml}
+                <div class="product-info">
+                    <div class="product-title">${prod.name}</div>
+                    <div class="product-desc">${prod.description}</div>
+                    <div class="price">${prod.price}</div>
+                </div>
+            `;
+            productBox.appendChild(card);
+        });
+
+    } catch (err) {
+        // 极致兜底容错：任何异常自动恢复原始页面产品，网站永不空白报错
+        productBox.innerHTML = `
+            <div class="product-card">
+                <div class="product-info">
+                    <div class="product-title">龙井 · 明前特级</div>
+                    <div class="product-desc">西湖狮峰头采单芽，栗香浓郁，鲜醇绵柔</div>
+                    <div class="price">$48 / 50g</div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-info">
+                    <div class="product-title">金骏眉 · 桐木关</div>
+                    <div class="product-desc">头春单芽，花果蜜香，细腻甜润</div>
+                    <div class="price">$68 / 50g</div>
+                </div>
+            </div>
+        `;
+        console.warn('已启动页面兜底兼容模式', err);
+    }
+});
+</script>
+
 </body>
 </html>
