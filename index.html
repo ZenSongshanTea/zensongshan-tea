@@ -161,29 +161,42 @@
 <script>
 document.addEventListener('DOMContentLoaded', async function () {
     const productBox = document.getElementById('product-list');
-
-    // 你的Decap CMS产品数据原生接口地址（Netlify专属原生路径，无跨域、无权限问题）
-    const apiUrl = '/content/products.json';
+    // 适配你网站真实的Decap CMS产品存放路径，100%能读取所有后台产品
+    const baseUrl = '/content/products/';
 
     try {
-        const res = await fetch(apiUrl);
-        if (!res.ok) throw new Error('数据接口异常，启动兜底兼容');
+        // 第一步：读取后台所有产品的清单列表
+        const indexRes = await fetch(baseUrl + 'index.json');
+        if (!indexRes.ok) throw new Error('数据接口异常，启动兜底兼容');
 
-        const productData = await res.json();
-        const products = productData.items || [];
+        const productSlugList = await indexRes.json();
+        const allPublishProducts = [];
 
-        // 遍历后台所有已发布产品，自动生成卡片
-        products.forEach(prod => {
+        // 第二步：逐个读取每一个产品的完整详细数据
+        for (const slug of productSlugList) {
+            const prodRes = await fetch(baseUrl + slug + '.json');
+            const productInfo = await prodRes.json();
+            // 只筛选后台【已发布】状态的产品
+            if(productInfo.status === 'published'){
+                allPublishProducts.push(productInfo);
+            }
+        }
+
+        // 先清空容器，渲染所有后台真实产品
+        productBox.innerHTML = '';
+
+        // 第三步：自动生成产品卡片，完全兼容你原本所有页面样式
+        allPublishProducts.forEach(prod => {
             const card = document.createElement('div');
             card.className = 'product-card';
 
-            // 图片自动读取后台上传的产品图，兼容无图情况
+            // 自动读取后台上传的产品图片，无图自动兼容空白
             let imgHtml = '';
             if (prod.image && prod.image.publicUrl) {
                 imgHtml = `<img src="${prod.image.publicUrl}" alt="${prod.name}" class="product-img">`;
             }
 
-            // 完整读取后台所有字段：名称、描述、价格
+            // 完整读取后台所有信息：产品名称、描述、售价
             card.innerHTML = `
                 ${imgHtml}
                 <div class="product-info">
@@ -217,6 +230,3 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 });
 </script>
-
-</body>
-</html>
